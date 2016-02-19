@@ -54,7 +54,7 @@ mysensors:
   persistence: true
 
 shell_command:
-  busca_gente: 'python2 /home/pi/scripts/buscagente.py'
+  busca_gente: 'python2 bt_scripts/buscagente.py'
 
 input_boolean:
   despcuarto:
