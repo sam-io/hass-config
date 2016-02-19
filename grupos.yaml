@@ -1,0 +1,66 @@
+default_view:
+  view: yes
+  entities:
+    - group.Familia
+    - group.luces
+    - group.Multimedia
+    - group.movapert
+    - group.temphumedad
+    - group.lux
+    - sun.sun
+    - sensor.solar_angle
+Familia:
+  entities:
+    - device_tracker.dani_iphone
+    - device_tracker.ana_s5
+Luces:
+  entities:
+    - light.sofa
+    - light.mueble
+    - light.mesitadani
+    - light.mesitaana
+    - light.lampara_del_despacho
+Multimedia:
+  entities:
+    - sensor.harmony
+    - media_player.mini
+    - sensor.mini_despacho
+Mov./Apert.:
+  entities:
+    - sensor.fibaro_system_fgms001_motion_sensor_sensor_2
+    - sensor.sensor_puerta_20
+Temp-Humedad:
+  entities:
+    - sensor.fibaro_system_fgms001_motion_sensor_temperature_2
+    - sensor.temperature_sensor_30
+    - sensor.sensor_humetemp_91
+    - sensor.sensor_humetemp_90
+    - sensor.sensor_humtemlux_113
+    - sensor.sensor_humtemlux_114
+Lux:
+  entities:
+    - sensor.fibaro_system_fgms001_motion_sensor_luminance_2
+    - sensor.sensor_humtemlux_115
+Escenas:
+  entities:
+    - scene.despiertasalon
+    - scene.despiertacuarto
+    - scene.tarde
+    - scene.noche
+    - scene.dimsalon
+    - scene.apagar
+Scenes:
+  view: yes
+  icon: 'mdi:lightbulb'
+  entities: group.escenas
+Reglas:
+  entities:
+    - input_boolean.despcuarto
+    - input_select.alarma_cuarto
+    - input_boolean.luztarde
+    - input_boolean.entrarsalirdecasa
+    - input_boolean.lucesplex
+Rules:
+  view: yes
+  icon: 'mdi:settings'
+  entities: group.reglas

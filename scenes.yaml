@@ -1,0 +1,201 @@
+- name: 'Tarde'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+      transition: 30
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+      transition: 30
+    light.mesitadani:
+      state: on
+      brightness: 100
+      transition: 30
+    light.mesitaana:
+      state: on
+      brightness: 100
+      transition: 30
+
+- name: 'EntradaEnCasa'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+      transition: 2
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+      transition: 2
+    light.mesitadani:
+      state: on
+      brightness: 100
+      transition: 2
+    light.mesitaana:
+      state: on
+      brightness: 100
+      transition: 2
+
+- name: 'Salon ON'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+
+- name: 'DespiertaSalon'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+      transition: 60
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 254
+      transition: 60
+
+- name: 'DespiertaCuarto'
+  entities:
+    light.mesitadani:
+      state: on
+      brightness: 254
+      transition: 300
+    light.mesitaana:
+      state: on
+      brightness: 254
+      transition: 300
+
+- name: 'DespiertaDespacho'
+  entities:
+    light.lampara_del_despacho:
+      state: on
+      rgb_color: [254, 254, 254]
+      brightness: 254
+      transition: 10
+
+- name: 'ApagaDespacho'
+  entities:
+    light.lampara_del_despacho:
+      state: off
+      transition: 30
+
+- name: 'Noche'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 75
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 75
+    light.mesitadani:
+      state: on
+      brightness: 50
+    light.mesitaana:
+      state: on
+      brightness: 50
+    light.lampara_del_despacho:
+      state: off
+
+- name: 'Apagar'
+  entities:
+    light.sofa:
+      state: off
+      transition: 10
+    light.mueble:
+      state: off
+      transition: 10
+    light.mesitadani:
+      state: off
+      transition: 10
+    light.lampara_del_despacho:
+      state: off
+      transition: 10
+    light.mesitaana:
+      state: off
+      transition: 10
+
+- name: 'DimSalon'
+  entities:
+    light.sofa:
+      state: off
+      transition: 2
+    light.mueble:
+      state: on
+      rgb_color: [55, 56, 254]
+      color_temp: 500
+      transition: 2
+      brightness: 30
+
+- name: 'PausaSalon'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      transition: 2
+      brightness: 50
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      transition: 2
+      brightness: 150
+
+- name: 'StopSalon'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      transition: 30
+      brightness: 200
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      transition: 30
+      brightness: 200
+- name: 'HoraDeDormir'
+  entities:
+    light.sofa:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 25
+      transition: 20
+    light.mueble:
+      state: on
+      rgb_color: [254, 254, 254]
+      color_temp: 153
+      brightness: 25
+      transition: 5
+    light.mesitadani:
+      state: on
+      brightness: 254
+      transition: 300
+    light.mesitaana:
+      state: on
+      brightness: 150
+      transition: 300

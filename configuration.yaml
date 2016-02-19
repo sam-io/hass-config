@@ -1,0 +1,104 @@
+homeassistant:
+  name: Casa
+  temperature_unit: C
+  time_zone: Europe/Madrid
+  latitude: <oculto>
+  longitude: <oculto>
+  customize: !include customized.yaml
+
+frontend:
+
+history:
+
+logbook:
+
+sun:
+
+updater:
+
+http:
+  api_password: <oculto>
+
+zwave:
+  usb_path: /dev/ttyACM0
+  config_path: /home/pi/python-openzwave/openzwave/config
+
+mqtt:
+  broker: 192.168.1.5
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+
+sensor:
+  - platform: mqtt
+    state_topic: 'harmony-api/state'
+    name: 'Harmony'
+    value_template: "{% if value == 'ver_tv' %}TV{% elif value == 'htpc' %}PLEX{% elif value =='radio' %}RADIO{% elif value =='off' %}OFF{% endif %}"
+  - platform: mqtt
+    state_topic: 'hass/despacho/mini'
+    name: "Mini Despacho"
+  - platform: template
+    sensors:
+      solar_angle:
+        value_template: '{{ "%+.1f"|format(states.sun.sun.attributes.elevation) }}'
+        friendly_name: 'Elevacion'
+        unit_of_measurement: '°'
+
+mysensors:
+  gateways:
+    - port: '/dev/ttyUSB0'
+      persistence_file: '/home/pi/.homeassistant/mysensors.json'
+      baud_rate: 115200
+  debug: true
+  version: '1.5'
+  persistence: true
+
+shell_command:
+  busca_gente: 'python2 /home/pi/scripts/buscagente.py'
+
+input_boolean:
+  despcuarto:
+    initial: on
+  luztarde:
+    initial: on
+  lucesplex:
+    initial: on
+  entrarsalirdecasa:
+    initial: on
+
+input_select:
+  alarma_cuarto:
+    name: 'Alarma Cuarto'
+    options:
+     - '06:35'
+     - '06:50'
+     - '07:00'
+    initial: '07:00'
+    icon: 'mdi:clock'
+
+notify:
+  name: notifica
+  platform: pushover
+  api_key: <oculto>
+  user_key: <oculto>
+
+device_tracker:
+  - platform: mqtt
+    devices:
+      dani_iphone: 'hass/dani/localizacion'
+      ana_s5: 'hass/ana/localizacion'
+
+light:
+  platform: hue
+  host: 192.168.1.200
+
+media_player:
+  platform: plex
+
+group: !include grupos.yaml
+
+scene: !include scenes.yaml
+
+automation: !include automation.yaml
+
+script: !include scripts.yaml

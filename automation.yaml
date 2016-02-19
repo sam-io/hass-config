@@ -1,0 +1,487 @@
+- alias: 'Luces Tarde (Gente en casa)'
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: '{{ state.attributes.elevation }}'
+    below: 6
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'home'
+    - platform: state
+      entity_id: input_boolean.luztarde
+      state: 'on'
+    - platform: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    service: scene.turn_on
+    entity_id: scene.tarde
+
+- alias: 'Luces al atardecer (Nadie en casa)'
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: '{{ state.attributes.elevation }}'
+    below: 4
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'not_home'
+    - platform: state
+      entity_id: input_boolean.luztarde
+      state: 'on'
+    - platform: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    service: scene.turn_on
+    entity_id: scene.noche
+
+- alias: 'Luces Tarde (Finde)'
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: '{{ state.attributes.elevation }}'
+    below: 2
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'home'
+    - platform: state
+      entity_id: input_boolean.luztarde
+      state: 'on'
+    - platform: time
+      weekday:
+        - sat
+        - sun
+  action:
+    service: scene.turn_on
+    entity_id: scene.tarde
+
+- alias: 'Luces Tarde (Finde) Nadie en casa'
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: '{{ state.attributes.elevation }}'
+    below: 1
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'not_home'
+    - platform: state
+      entity_id: input_boolean.luztarde
+      state: 'on'
+    - platform: time
+      weekday:
+        - sat
+        - sun
+  action:
+    service: scene.turn_on
+    entity_id: scene.noche
+
+- alias: 'Entrando en casa'
+  trigger:
+    platform: state
+    entity_id: group.familia
+    from: 'not_home'
+    to: 'home'
+  condition:
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: 3
+    - platform: state
+      entity_id: input_boolean.entrarsalirdecasa
+      state: 'on'
+    - platform: time
+      after: '16:00'
+  action:
+    service: scene.turn_on
+    entity_id: scene.EntradaEnCasa
+
+- alias: 'Entrando (madrugada)'
+  trigger:
+    platform: state
+    entity_id: group.familia
+    from: 'not_home'
+    to: 'home'
+  condition:
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: 2
+    - platform: state
+      entity_id: input_boolean.entrarsalirdecasa
+      state: 'on'
+    - platform: time
+      before: '04:00'
+  action:
+    service: scene.turn_on
+    entity_id: scene.EntradaEnCasa
+
+- alias: 'Saliendo por la tarde'
+  trigger:
+    platform: state
+    entity_id: group.familia
+    from: 'home'
+    to: 'not_home'
+  condition:
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: 3
+    - platform: time
+      after: '17:00'
+    - platform: state
+      entity_id: input_boolean.entrarsalirdecasa
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.noche
+
+- alias: 'Despertador Salon'
+  trigger:
+    platform: time
+    after: '06:35'
+  action:
+    service: scene.turn_on
+    entity_id: scene.despiertasalon
+
+- alias: 'Enciende Despacho'
+  trigger:
+    platform: state
+    entity_id: sensor.mini_despacho
+    to: 'ON'
+  condition:
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: 1.5
+    - platform: time
+      after: '05:30'
+      before: '23:00'
+  action:
+    service: scene.turn_on
+    entity_id: scene.DespiertaDespacho
+
+# - alias: 'Enciende Despacho si se esta usando'
+#   trigger:
+#     platform: numeric_state
+#     entity_id: sun.sun
+#     value_template: '{{ state.attributes.elevation }}'
+#     below: 4
+#   condition:
+#     platform: state
+#     entity_id: sensor.mini_despacho
+#     state: 'ON'
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.DespiertaDespacho
+
+- alias: 'Apaga Despacho'
+  trigger:
+    platform: state
+    entity_id: sensor.mini_despacho
+    to: 'OFF'
+  condition:
+    platform: state
+    entity_id: light.lampara_del_despacho
+    state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.apagadespacho
+
+- alias: 'Despertador Cuarto 6:35 AM'
+  trigger:
+    platform: time
+    after: '06:35'
+  condition:
+    - platform: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - platform: state
+      entity_id: input_select.alarma_cuarto
+      state: '06:35'
+    - platform: state
+      entity_id: input_boolean.despcuarto
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.despiertacuarto
+
+- alias: 'Despertador Cuarto 6:50 AM'
+  trigger:
+    platform: time
+    after: '06:50'
+  condition:
+    - platform: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - platform: state
+      entity_id: input_select.alarma_cuarto
+      state: '06:50'
+    - platform: state
+      entity_id: input_boolean.despcuarto
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.despiertacuarto
+
+- alias: 'Despertador Cuarto 7 AM'
+  trigger:
+    platform: time
+    after: '07:00'
+  condition:
+    - platform: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - platform: state
+      entity_id: input_select.alarma_cuarto
+      state: '07:00'
+    - platform: state
+      entity_id: input_boolean.despcuarto
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.despiertacuarto
+
+- alias: 'Apaga Luces Mañana (Entre semana)'
+  trigger:
+    platform: time
+    after: '08:30'
+  condition:
+    - platform: state
+      entity_id: group.all_lights
+      state: 'on'
+    - platform: time
+      weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+  action:
+    service: script.turn_on
+    entity_id: script.apagaluces
+
+- alias: 'Apaga Luces Mañana (Finde)'
+  trigger:
+    platform: numeric_state
+    entity_id: sun.sun
+    value_template: '{{ state.attributes.elevation }}'
+    above: 3
+  condition:
+    - platform: state
+      entity_id: group.all_lights
+      state: 'on'
+    - platform: time
+      weekday:
+          - sat
+          - sun
+  action:
+    service: script.turn_on
+    entity_id: script.apagaluces
+
+- alias: 'Apaga Luces 1 AM'
+  trigger:
+    platform: time
+    after: '01:00'
+  condition:
+    platform: state
+    entity_id: group.familia
+    state: 'not_home'
+  action:
+    service: script.turn_on
+    entity_id: script.apagaluces
+
+###################  PLEX #########################
+
+- alias: 'Play en Salon'
+  trigger:
+    platform: state
+    entity_id: media_player.mini
+    to: 'playing'
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'home'
+    - platform: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+    - platform: time
+      after: '22:00'
+    - platform: state
+      entity_id: input_boolean.lucesplex
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.dimsalon
+
+- alias: 'Pausa en Salon'
+  trigger:
+    platform: state
+    entity_id: media_player.mini
+    to: 'paused'
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'home'
+    - platform: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+    - platform: time
+      after: '22:00'
+    - platform: state
+      entity_id: input_boolean.lucesplex
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.pausasalon
+
+- alias: 'Stop en Salon'
+  trigger:
+    platform: state
+    entity_id: media_player.mini
+    to: 'idle'
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'home'
+    - platform: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+    - platform: time
+      after: '22:00'
+    - platform: state
+      entity_id: input_boolean.lucesplex
+      state: 'on'
+  action:
+    service: scene.turn_on
+    entity_id: scene.stopsalon
+
+##################### HARMONY ########################
+- alias: 'Hora de dormir'
+  trigger:
+    platform: state
+    entity_id: sensor.harmony
+    to: 'OFF'
+  condition_type: or
+  condition:
+    - platform: time
+      after: '22:30'
+    - platform: time
+      before: '02:00'
+  action:
+    service: scene.turn_on
+    entity_id: scene.horadedormir
+
+
+############# TRIGGERS DE MOVIMIENTO  ##################
+
+- alias: 'Movimiento -> Enciende lampara del salon'
+  trigger:
+    - platform: state
+      entity_id: sensor.fibaro_system_fgms001_motion_sensor_sensor_2
+      to: 'on'
+  condition:
+    - platform: state
+      entity_id: light.mueble
+      state: 'off'
+    - platform: time
+      before: '06:30'
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp
+
+- alias: 'Movimiento 2-> Enciende lampara del salon'
+  trigger:
+    - platform: state
+      entity_id: sensor.fibaro_system_fgms001_motion_sensor_sensor_2
+      to: 'on'
+  condition:
+    - platform: state
+      entity_id: light.mueble
+      state: 'off'
+    - platform: time
+      after: '23:00'
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp
+
+- alias: 'Alguien entra'
+  trigger:
+    - platform: state
+      entity_id: sensor.sensor_puerta_20
+      to: 'on'
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'not_home'
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.buscagente
+#
+- alias: 'Tal vez salga alguien'
+  trigger:
+    - platform: state
+      entity_id: sensor.sensor_puerta_20
+      to: 'on'
+  condition:
+    - platform: state
+      entity_id: group.familia
+      state: 'home'
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.buscagentequesale
+
+- alias: 'Para de buscar'
+  trigger:
+    - platform: state
+      entity_id: group.familia
+      from: 'not_home'
+      to: 'home'
+  action:
+    service: homeassistant.turn_off
+    entity_id: script.buscagentequesale
+
+
+- alias: 'Actualizacion disponible HA'
+  trigger:
+    platform: state
+    entity_id: updater.updater
+  action:
+    service: notify.notifica
+    data:
+      message: 'Actualizacion de HomeAssistant disponible.'
+
+- alias: 'Bateria baja Fibaro FGMS001'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.fibaro_system_fgms001_motion_sensor_sensor_2
+      value_template: '{{ state.attributes.battery_level }}'
+      below: 10
+  action:
+    service: notify.notifica
+    data:
+      message: 'La bateria del sensor Fibaro esta baja'

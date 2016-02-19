@@ -1,0 +1,60 @@
+apagaluces:
+  alias: 'Apagar luces'
+  sequence:
+    - service: light.turn_off
+      service_data:
+        entity_id: light.mesitadani
+        transition: 30
+    - service: light.turn_off
+      service_data:
+        entity_id: light.sofa
+        transition: 30
+    - service: light.turn_off
+      service_data:
+        entity_id: light.mueble
+        transition: 30
+    - service: light.turn_off
+      service_data:
+        entity_id: light.lampara_del_despacho
+        transition: 30
+    - service: light.turn_off
+      service_data:
+        entity_id: light.mesitaana
+        transition: 30
+timed_lamp:
+  alias: 'Enciende la lampara del Salon y pone el temporizador'
+  sequence:
+    # Cancel ev. old timers
+    - execute_service: script.turn_off
+      service_data:
+         entity_id: script.timer_off
+    - execute_service: light.turn_on
+      service_data:
+        entity_id: light.sofa
+        brightness: 150
+        rgb_color: [254, 254, 254]
+        color_temp: 153
+        transition: 10
+    # Set new timer
+    - execute_service: script.turn_on
+      service_data:
+        entity_id: script.timer_off
+timer_off:
+  alias: 'Apaga la lampara del salon despues de 1 minuto'
+  sequence:
+    - delay:
+        minutes: 1
+    - execute_service: light.turn_off
+      service_data:
+        entity_id: light.sofa
+        transition: 10
+buscagente:
+  alias: 'Busca gente que acabe de entrar en casa'
+  sequence:
+    - service: shell_command.busca_gente
+buscagentequesale:
+  alias: 'Buscando gente que salga'
+  sequence:
+    - delay:
+        minutes: 3
+    - service: shell_command.busca_gente
