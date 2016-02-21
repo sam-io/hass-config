@@ -75,6 +75,15 @@ input_select:
      - '07:00'
     initial: '07:00'
     icon: 'mdi:clock'
+  harmony_actividad:
+    name: 'HarmonySalon'
+    options:
+     - 'Television'
+     - 'Media Center'
+     - 'Radio'
+     - 'Apagar'
+    initial: 'Apagar'
+    icon: 'mdi:television-guide'
 
 notify:
   name: notifica
