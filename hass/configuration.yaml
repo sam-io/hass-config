@@ -55,6 +55,10 @@ mysensors:
 
 shell_command:
   busca_gente: 'python2 bt_scripts/buscagente.py'
+  ver_tele:  'curl --data "activity_name=Ver%20TV" http://mini.local:8282/start_activity'
+  media_center:  'curl --data "activity_name=HTPC" http://mini.local:8282/start_activity'
+  radio:  'curl --data "activity_name=Radio" http://mini.local:8282/start_activity'
+  apaga_harmony:  'curl --data "activity_name=PowerOff" http://mini.local:8282/start_activity'
 
 input_boolean:
   despcuarto:
