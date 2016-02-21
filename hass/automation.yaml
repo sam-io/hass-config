@@ -382,6 +382,34 @@
     service: scene.turn_on
     entity_id: scene.horadedormir
 
+- alias: 'Ver Television'
+  trigger:
+    platform: state
+    entity_id: input_select.harmony_actividad
+    state: 'Television'
+  action:
+    service: shell_command.ver_tele
+- alias: 'Media Center'
+  trigger:
+    platform: state
+    entity_id: input_select.harmony_actividad
+    state: 'Media Center'
+  action:
+    service: shell_command.media_center
+- alias: 'Radio'
+  trigger:
+    platform: state
+    entity_id: input_select.harmony_actividad
+    state: 'Radio'
+  action:
+    service: shell_command.radio
+- alias: 'Apagar Harmony'
+  trigger:
+    platform: state
+    entity_id: input_select.harmony_actividad
+    state: 'Apagar'
+  action:
+    service: shell_command.apaga_harmony
 
 ############# TRIGGERS DE MOVIMIENTO  ##################
 
